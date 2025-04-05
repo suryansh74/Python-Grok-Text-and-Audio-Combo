@@ -11,7 +11,7 @@ import os
 import re
 
 # ==================== CONFIG ====================
-GROQ_API_KEY = "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"
+GROQ_API_KEY = "Grok_API"
 MODEL = "qwen-qwq-32b"
 VOICES = ['en-AU-NatashaNeural', 'en-IE-EmilyNeural', 'en-IN-NeerjaNeural', 'en-US-AndrewMultilingualNeural']
 VOICE = VOICES[3]
