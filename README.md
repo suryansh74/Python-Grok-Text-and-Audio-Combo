@@ -250,3 +250,118 @@ if __name__ == "__main__":
 
 ---
 
+## 🎧 voice_typing_assistant.py
+
+This script listens to your voice using **Google Speech Recognition**, transcribes the speech, and then **types it automatically** into the active input field. It uses `pynput` to listen for hotkeys and `Rich` to display status messages in a styled terminal.
+
+---
+
+### 🚀 Features:
+- 🗣️ Press `Alt + K` to **start speech recognition**.
+- 🛑 Press `Right Shift` to **stop listening**.
+- ⌨️ Automatically types the transcribed text into the focused input.
+- 🎛️ Uses Rich for colored panels and styled output.
+- 🎤 Captures continuous chunks of audio until stopped.
+- 🧠 Uses threading to allow background execution.
+
+---
+
+### 🛠️ Dependencies
+
+```bash
+pip install SpeechRecognition pynput rich
+```
+
+---
+
+### 🧠 Function: `listen_and_type()`
+
+```python
+def listen_and_type():
+```
+
+- Starts capturing audio using your default microphone.
+- Adjusts for ambient noise.
+- Collects audio in small chunks.
+- Once stopped, it:
+  - Combines the chunks.
+  - Transcribes speech using Google API.
+  - Types the resulting text using `pynput.keyboard.Controller`.
+  - Displays the transcribed text in a Rich panel.
+
+📦 **Handles**:
+- ✅ Noisy background
+- ⚠️ Timeout errors
+- ⚠️ Speech not recognized
+- ⚠️ Google API request errors
+
+---
+
+### 🧩 Function: `type_text(text)`
+
+```python
+def type_text(text):
+```
+
+- Waits briefly to give focus to the input field.
+- Types the transcribed text using `keyboard_controller.type()`.
+
+---
+
+### 🎛️ Keyboard Controls
+
+#### 🔍 `on_press(key)`
+
+```python
+def on_press(key):
+```
+
+- `Alt + K`: Starts listening if not already listening.
+- `Right Shift`: Stops the current speech capture session.
+
+#### 🔄 `on_release(key)`
+
+```python
+def on_release(key):
+```
+
+- Tracks when `Alt` key is released to reset flag.
+
+---
+
+### 🏁 Entry Point
+
+```python
+if __name__ == "__main__":
+```
+
+- Starts the script and shows the message:
+  ```
+  ✅ Script is running! Press Alt+K to start listening. Press Right Shift to stop and type the text.
+  ```
+- Starts the `keyboard.Listener` in the background to monitor key events.
+
+---
+
+### ✅ How to Use
+
+1. Ensure your mic is connected and working.
+2. Run the script:
+   ```bash
+   python voice_typing_assistant.py
+   ```
+3. Focus on an input field (browser, editor, chat box, etc).
+4. Press `Alt + K` to begin speech recognition.
+5. Speak your sentence clearly.
+6. Press `Right Shift` to stop and let the script transcribe + type your sentence.
+
+---
+
+### 🧼 Notes
+
+- Works best in quiet environments.
+- Slight delay added before typing to ensure input field is active.
+- Ideal for hands-free typing, accessibility tools, or productivity.
+
+---
+
