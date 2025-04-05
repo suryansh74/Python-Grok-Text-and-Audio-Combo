@@ -25,7 +25,7 @@ warnings.filterwarnings("ignore")  # Ignore Python warnings
 console = Console()
 
 # Groq API Key
-API_KEY = "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"
+API_KEY = "Grok_API"
 model_name = "deepseek-r1-distill-qwen-32b"
 
 recognizer = sr.Recognizer()
