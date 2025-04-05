@@ -25,6 +25,60 @@
 Google's speech-to-text API (used via `speech_recognition`) also has a generous free tier for personal usage. You’re unlikely to hit limits during normal use.
 
 ---
+## 📦 Install Required Libraries
+
+Make sure to install the following dependencies before running the scripts. You can use `pip` to install them all at once:
+
+### ✅ Recommended Installation Command:
+
+```bash
+pip install speechrecognition pynput rich requests asyncio groq
+```
+
+### 📚 Included Libraries:
+
+| Library                | Purpose                                                                 |
+|------------------------|-------------------------------------------------------------------------|
+| `speechrecognition`    | Captures and transcribes voice using Google Speech API                  |
+| `pynput`               | Detects global keyboard shortcuts and simulates typing                  |
+| `rich`                 | Provides styled terminal output with panels, colors, and formatting     |
+| `requests`             | Makes HTTP requests (used for APIs or TTS services)                     |
+| `asyncio`              | Manages asynchronous execution for concurrent tasks                     |
+| `groq`                 | Interacts with the Groq API for generating AI responses                 |
+| `shutil`, `os`, `re`, `time`, `tempfile`, `subprocess`, `threading`, `warnings` | Standard Python libraries, no installation needed |
+
+> ✅ All scripts are compatible with **Python 3.8+**
+
+---
+
+### 💡 Tip:
+If you're working in a virtual environment, activate it first before installing the packages.
+
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+You can also create a `requirements.txt` file with the following content:
+
+```
+speechrecognition
+pynput
+rich
+requests
+asyncio
+groq
+```
+
+And install it using:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
 
 ## 📂 About the Code Files
 
