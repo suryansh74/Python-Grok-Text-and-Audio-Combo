@@ -17,68 +17,104 @@ It Also uses Google Quota you can check it limit also use freely for human manua
 There are mainly three files 
 1. audio2audio_complete.py: In this it listens to  *input_audio-->Google quota-->Text-->Grok_Api_hit-->Response_Text-->edge_tts(python library)-->output_audio
    This is documentation:
-Voice Assistant Using Groq API and Edge TTS
 
-This script creates a voice assistant that listens to your speech when you press Alt + L, transcribes it using Google's speech recognition, sends the transcription to Groq's language model for a response, and speaks the reply using Edge TTS.
+   ### This file does:
+   
+   A voice assistant that:
+   - Listens to your voice on `Alt + L`
+   - Stops listening on `Right Shift`
+   - Sends transcription to Groq for an easy-to-understand explanation
+   - Plays the response out loud using Edge TTS and ffplay
+   
+   ---
+   
+   ### Configuration Section
+   
+   #### `GROQ_API_KEY`, `MODEL`, `VOICES`, `VOICE`
+   
+   Sets up the API key, model name, and available voices. You can change the voice by modifying the `VOICE` variable.
+   
+   ---
+   
+   ### Initialization Section
+   
+   #### `console`, `recognizer`
+   
+   Initializes the `rich.console.Console` and the speech recognizer object from `speech_recognition`.
+   
+   #### State Variables
+   
+   Flags used to track whether the assistant is listening and which keys are pressed.
+   
+   ---
+   
+   ### `clean_text(text)`
+   
+   #### Functionality:
+   - Cleans Groq's response
+   - Removes symbols, emojis, markdown, and extra spaces
+   - Keeps only readable characters for better speech output
+   
+   ---
+   
+   ### `send_to_groq(prompt)`
+   
+   #### Functionality:
+   - Sends transcribed speech to Groq API
+   - Adds an instruction to generate short, easy-to-understand replies
+   - Cleans the response using `clean_text`
+   - Removes any `<think>...</think>` tags
+   
+   ---
+   
+   ### `speak_streaming(text, pause_duration=0.01)`
+   
+   #### Functionality:
+   - Splits text into sentences
+   - Uses Edge TTS to generate audio for each sentence
+   - Plays audio using `ffplay`
+   - Optionally waits after each sentence for natural pacing
+   
+   ---
+   
+   ### `listen_loop()`
+   
+   #### Functionality:
+   - Activates the microphone and starts collecting audio
+   - Recognizes and prints each spoken segment
+   - On `Right Shift`, stops listening
+   - Displays full transcription and sends it to Groq
+   - Speaks the response using `speak_streaming`
+   
+   ---
+   
+   ### Keyboard Event Handlers
+   
+   #### `on_press(key)`
+   
+   - Tracks key presses
+   - If `Alt + L` is pressed, starts `listen_loop` in a new thread
+   - If `Right Shift` is pressed while listening, stops the listener
+   
+   #### `on_release(key)`
+   
+   - Resets Alt key state when released
+   
+   ---
+   
+   ### `__main__` Block
+   
+   #### Functionality:
+   - Prints startup message with hotkey instructions
+   - Starts the keyboard listener to detect `Alt + L` and `Right Shift`
+   
+   ---
+   
+   ### How to Use
+   
+   1. Run the script.
+   2. Press `Alt + L` to start speaking.
+   3. Say something.
+   4. Press `Right Shift` to stop.
+   5. The script will transcribe, fetch a response from Groq, and speak the reply.
 
-Features:
-
-Activation with Alt + L and deactivation with Right Shift
-
-Real-time speech recognition and transcription
-
-Cleans and simplifies AI response text
-
-Streams text-to-speech using Edge TTS
-
-Displays transcription and response using rich console UI
-
-Threaded listening to avoid UI blocking
-
-Hotkeys:
-
-Alt + L: Start voice input
-
-Right Shift: Stop voice input
-
-Main Components:
-
-Speech Recognition: Captures and transcribes speech using a microphone.
-
-Groq API: Sends transcribed text and receives a brief, user-friendly explanation.
-
-Text Cleaner: Removes special characters, emojis, and formatting for better TTS playback.
-
-Streaming TTS: Breaks text into sentences and plays them one by one using Edge TTS and ffplay.
-
-Keyboard Listener: Handles key combinations using pynput.
-
-Core Logic:
-
-Waits for Alt + L key combo to trigger recording.
-
-Captures audio and builds a full transcription.
-
-On Right Shift, stops listening and sends the collected text to Groq.
-
-Receives a cleaned and short explanation from Groq API.
-
-Converts response to speech and plays it sentence by sentence.
-
-Configuration Options:
-
-GROQ_API_KEY: Replace with your own Groq API key.
-
-MODEL: Set to desired Groq model.
-
-VOICES: Array of voices supported by Edge TTS. You can change the default one by modifying the VOICE variable.
-
-pause_duration: Adjust pause after sentences while speaking.
-
-Note:
-
-The script uses threading and async to ensure smooth interaction and playback.
-
-Make sure Edge TTS and FFmpeg (ffplay) are accessible in your system's PATH.
-
- 
