@@ -129,3 +129,124 @@ Performs the full pipeline:
    - Speak the answer back using Edge TTS.
 
 ---
+
+## 🗣️ speech_to_ai_response.py
+
+This script listens to your speech, transcribes it using **Google Speech Recognition**, sends the text to **Groq AI**, and displays the response in the terminal using **Rich** formatting.
+
+---
+
+### 🚀 Features:
+- 🎙️ Listens to your voice until you press `Enter`.
+- 🧠 Sends your input to Groq AI for processing.
+- 💬 Streams the response and displays it in a clean terminal layout.
+- 🖥️ Uses `Rich` to format output in panels with colors and styles.
+- 🎧 Handles audio warnings silently using `os.environ`.
+
+---
+
+### 🛠️ Environment Setup
+
+```python
+os.environ["PYTHONWARNINGS"] = "ignore"
+os.environ["SDL_AUDIODRIVER"] = "dummy"
+os.environ["PULSE_LOG"] = "0"
+```
+
+- Suppresses Python, ALSA, and PulseAudio warnings.
+- Ensures smoother CLI experience.
+
+---
+
+### 🔑 Configuration
+
+#### `API_KEY` and `model_name`
+
+```python
+API_KEY = "Grok_API"
+model_name = "deepseek-r1-distill-qwen-32b"
+```
+
+- Replace `"Grok_API"` with your actual **Groq API key**.
+- You can switch the model depending on what’s available in your Groq dashboard.
+
+---
+
+### 🧠 Function: `recognize_speech()`
+
+```python
+def recognize_speech():
+```
+
+- Activates the mic and listens until Enter is pressed.
+- Uses `speech_recognition` to capture audio in chunks.
+- Combines audio frames for batch transcription.
+- Sends recognized text to Groq via `send_to_groq()`.
+
+📦 **Handles**:
+- ✅ Ambient noise adjustment
+- ⚠️ No audio detected
+- ⚠️ Google API errors
+- ⚠️ Unintelligible speech
+
+---
+
+### ⏹️ Function: `listen_for_stop()`
+
+```python
+def listen_for_stop():
+```
+
+- Waits for the `Enter` key to set `stop_listening = True`.
+- Used to end the audio capture gracefully.
+
+---
+
+### 📡 Function: `send_to_groq(prompt)`
+
+```python
+def send_to_groq(prompt):
+```
+
+- Sends recognized text to the Groq API using the `groq` client.
+- Uses `stream=True` to simulate real-time replies.
+- Assembles full response and displays it using a Rich panel.
+
+🪄 **Output**:
+- Styled Groq response in `[bold magenta]💬 Groq Response[/bold magenta]` panel.
+
+---
+
+### 🧵 Main Loop Execution
+
+```python
+if __name__ == "__main__":
+```
+
+- Keeps running in a loop.
+- For each interaction:
+  1. Resets `stop_listening` flag.
+  2. Starts a thread to detect Enter key.
+  3. Starts the voice recognition function.
+  4. Waits for Enter to proceed again.
+
+🖼️ **UI Enhancements**:
+- Uses `shutil.get_terminal_size().columns` to create full-width visual separators.
+- Uses `[bold cyan]🚀 PRESS ENTER FOR NEXT RESPONSE 🚀` centered message.
+
+---
+
+### ✅ How to Use
+
+1. Replace `API_KEY = "Grok_API"` with your actual Groq key.
+2. Run the script:
+   ```bash
+   python speech_to_ai_response.py
+   ```
+3. Speak into the microphone.
+4. Press `Enter` to stop recording and process the response.
+5. View the formatted AI response in your terminal.
+6. Press `Enter` again to repeat the cycle.
+
+---
+
