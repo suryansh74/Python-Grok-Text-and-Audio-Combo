@@ -24,6 +24,7 @@
 ### 🌐 Google Free Quota:
 Google's speech-to-text API (used via `speech_recognition`) also has a generous free tier for personal usage. You’re unlikely to hit limits during normal use.
 
+---  
 ---
 ## 📦 Install Required Libraries
 
@@ -77,6 +78,7 @@ And install it using:
 pip install -r requirements.txt
 ```
 
+---  
 ---
 
 
@@ -182,6 +184,7 @@ Performs the full pipeline:
    - Send it to Groq for explanation,
    - Speak the answer back using Edge TTS.
 
+---  
 ---
 
 ## 🗣️ speech_to_ai_response.py
@@ -302,6 +305,7 @@ if __name__ == "__main__":
 5. View the formatted AI response in your terminal.
 6. Press `Enter` again to repeat the cycle.
 
+---  
 ---
 
 ## 🎧 voice_typing_assistant.py
